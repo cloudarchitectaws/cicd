@@ -1,17 +1,17 @@
 Resources: 
   Ec2Instance:
-   Type: 'AWS::EC2::Instance'
-   Properties:
-     SecurityGroups:
-       - !Ref InstanceSecurityGroup
-     KeyName: Mumbai_myudacity
-     ImageId: 'ami-00bf4ae5a7909786c'
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      SecurityGroups:
+        - !Ref InstanceSecurityGroup
+      KeyName: Mumbai_myudacity
+      ImageId: 'ami-00bf4ae5a7909786c'
   InstanceSecurityGroup:
-   Type: 'AWS::EC2::SecurityGroup'
-   Properties:
-     GroupDescription: Enable SSH access via port 22
-     SecurityGroupIngress:
-       - IpProtocol: tcp
-         FromPort: '22'
-         ToPort: '22'
-         CidrIp: 0.0.0.0/0
+    Type: 'AWS::EC2::SecurityGroup'
+    Properties:
+      GroupDescription: Enable SSH access via port 22
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: '22'
+          ToPort: '22'
+          CidrIp: 0.0.0.0/0
