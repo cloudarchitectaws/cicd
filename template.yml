@@ -4,7 +4,7 @@ Resources:
    Properties:
      SecurityGroups:
        - !Ref InstanceSecurityGroup
-     KeyName: udacity
+     KeyName: Mumbai_myudacity
      ImageId: 'ami-00bf4ae5a7909786c'
   InstanceSecurityGroup:
    Type: 'AWS::EC2::SecurityGroup'
