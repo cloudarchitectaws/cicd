@@ -23,15 +23,16 @@ jobs:
           command: |
             aws cloudformation deploy \
               --template-file template.yml \
-              --stack-name my-stack
-          command: |
-            return 1
+              --stack-name prod-${CIRCLE_WORKFLOW_ID}
+      - run: return 1
       - destroy_environments
         when: on_fail
+        
   
 workflows:
   my_workflow:
     jobs:
       - create_infrastructure 
+      - destroy_environments
                  
 
