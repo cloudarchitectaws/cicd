@@ -5,6 +5,13 @@ orbs:
   # Declare a dependency on the welcome-orb
   
 # Orchestrate or schedule a set of jobs
+commands:
+  destroy_environments:
+    steps:
+      - run:
+          name: Destroy Environments
+          command: |
+            aws cloudformation delete-stack --stack-name prod-${CIRCLE_WORKFLOW_ID}
 jobs:
   create_infrastructure:
     docker:
@@ -12,33 +19,19 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Ensure backend infrastructure exist
+          name: stimulate error
           command: |
             aws cloudformation deploy \
               --template-file template.yml \
               --stack-name my-stack
-
-  smoke_test:
-      docker:
-        - image: alpine:latest
-      steps:
-        - run: apk add --update curl
-        - run:
-            name: smoke test.
-            command: |
-              URL="https://blog.udacityy.com/"
-              if curl -s --head ${URL} # test if blog.udacity com exists
-              then
-               return 0
-              else
-               return 1
-              fi
-
+          command: |
+            return 1
+      - destroy_environments
+        when: on_fail
+  
 workflows:
   my_workflow:
     jobs:
       - create_infrastructure 
-      - smoke_test:
-          requires:
-            - create_infrastructure              
+                 
 
